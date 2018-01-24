@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+	</body>
+</html>
+<script type="text/javascript">
+	
+	
+	let A = [1,2,3];
+	let B = ["a","b"];
+	
+	
+	let cycle = function(a=undefined,b=undefined){
+		if(Array.isArray(a) && Array.isArray(b)){
+//			if(a.length > b.length){
+				let list = [];
+				const num = a.length*b.length;
+				for (var i=0,n=0,m=0;i < num;i++) {
+					list[i] = `(${A[n]},${B[m]})`;
+					n++;
+					m++;
+					if(n == a.length){
+						n = 0;
+					};
+					if(m == b.length){
+						m = 0;
+					};
+				};
+				console.log(list)
+				return function(i){
+					let one = i-1;
+					return list[one];
+				};
+//			}else{
+//				
+//			}
+		}else{
+			return "";
+		};
+ 	};
+	console.log(`${B[1]}`)
+	console.log(cycle(A,B)(2))
+</script>
