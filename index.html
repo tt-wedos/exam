@@ -21,7 +21,7 @@
 				let list = [];
 				const num = a.length*b.length;
 				for (var i=0,n=0,m=0;i < num;i++) {
-					list[i] = `(${A[n]},${B[m]})`;
+					list[i] = `(${a[n]},${b[m]})`;
 					n++;
 					m++;
 					if(n == a.length){
@@ -31,10 +31,14 @@
 						m = 0;
 					};
 				};
-				console.log(list)
 				return function(i){
 					let one = i-1;
-					return list[one];
+					if(list[one]){
+						return list[one];
+					}else{
+						return null;
+					}
+					
 				};
 //			}else{
 //				
@@ -43,6 +47,5 @@
 			return "";
 		};
  	};
-	console.log(`${B[1]}`)
 	console.log(cycle(A,B)(2))
 </script>
