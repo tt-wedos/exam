@@ -13,39 +13,65 @@
 	
 	let A = [1,2,3];
 	let B = ["a","b"];
-	
-	
 	let cycle = function(a=undefined,b=undefined){
 		if(Array.isArray(a) && Array.isArray(b)){
-//			if(a.length > b.length){
 				let list = [];
 				const num = a.length*b.length;
-				for (var i=0,n=0,m=0;i < num;i++) {
+				//求出A、B所有组合并添加进list数组中
+				for (let i=0,n=0,m=0;i < num;i++) {
 					list[i] = `(${a[n]},${b[m]})`;
+//					let indexV = `(${a[n]},${b[m]})`;
+//					list.push(indexV);
 					n++;
 					m++;
-					if(n == a.length){
-						n = 0;
-					};
-					if(m == b.length){
-						m = 0;
-					};
+					n = n%a.length;
+					m = m%b.length;
 				};
-				return function(i){
-					let one = i-1;
-					if(list[one]){
+				return function(i=undefined){//i表示list里面的第几个数据，比其索引值大1
+					let re = /^[0-9]+$/;
+					//判断传入值是否为整数
+					if(re.test(i)){
+						//去除整数前面的0
+						let iNew = Number.parseInt(i);
+						let one = iNew%list.length-1;
 						return list[one];
 					}else{
-						return null;
-					}
-					
+						return ""
+					};
 				};
-//			}else{
-//				
-//			}
 		}else{
 			return "";
 		};
  	};
-	console.log(cycle(A,B)(2))
+ 	
+ 	
+ 	//函数性能测试使用performance.now()
+ 	//median函数目的是取数组中所有数据的中位数
+ 	//measureFun函数记录一个作为参数传入的函数执行10次的每次所用的时间
+ 	
+ 	
+ 	function median(sequence) { 
+ 
+	 	sequence.sort();  
+	 
+	 	return sequence[Math.ceil(sequence.length / 2)]; 
+	 
+	};
+	
+	
+	function measureFun(func,arr1,arr2,ii){
+		let arr = [];
+		for (let i = 0;i < 10;i++) {
+			let t0 = performance.now();
+			func(arr1,arr2)(ii);
+			let t1 = performance.now();
+			arr.push(t1 - t0);
+		};
+		console.log(func.name,"time",median(arr).toFixed(10));
+	};
+	
+	
+	
+	measureFun(cycle,A,B,2);
+	console.log(cycle(A,B)(2));
 </script>
